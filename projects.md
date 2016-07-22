@@ -4,11 +4,11 @@ title: Projects
 permalink: /projects/
 ---
 
-[LebronCoin (retired)]({{ site.baseurl}}/lebroncoin.html)
+[LebronCoin (retired)](https://github.com/nhatbui/lebroncoin)
 
 [I PageRanked the NBA](https://github.com/nhatbui/nbarank/blob/master/schedule_rank.ipynb)
 
-[P2P Bandits]({{ site.baseurl }}/p2pbandits.html)
+[P2P Bandits]({{ site.baseurl }}/assets/p2p_bandits.pdf)
 
 [Collaborative Filter and Multi-Armed Bandits]({{ site.baseurl }}/assets/mab_cf.pdf)
 
