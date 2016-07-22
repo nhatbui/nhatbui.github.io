@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Notes
-permalink: /notes/
+title: Archive
+permalink: /archive/
 ---
 
-<h1 class="page-heading">Posts</h1>
+<h1 class="page-heading">Archive</h1>
 
 <ul class="post-list">
   {% for post in site.posts %}
