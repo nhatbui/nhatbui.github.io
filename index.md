@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Archive
-permalink: /archive/
+title: Index
+permalink: /index/
 ---
 
-<h1 class="page-heading">Archive</h1>
+<h1 class="page-heading">Index</h1>
 
 <ul class="post-list">
   {% for post in site.posts %}
