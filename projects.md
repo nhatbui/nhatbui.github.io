@@ -4,6 +4,8 @@ title: Projects
 permalink: /projects/
 ---
 
+[Twitch Compakt - Condensed Twitch Chat]({{ site.baseurl}}/compakt)
+
 [LebronCoin (retired)](https://github.com/nhatbui/lebroncoin)
 
 [I PageRanked the NBA](https://github.com/nhatbui/nbarank/blob/master/schedule_rank.ipynb)
