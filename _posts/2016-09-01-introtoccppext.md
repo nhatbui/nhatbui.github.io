@@ -76,7 +76,7 @@ Now your CPython is _extended_ with `myLib`.
 ### How to use your large C++ library in Python...
 
 There's only one thing you need to do to use your C++ library in Python:
-__You need to write facade functions that convert Python objects to C++ objects and then call your C++ functions. Vice versa, you need to convert C++ objects returned from your C++ function into Python objects.__
+__You need to write adapters that convert Python objects to C++ objects and then call your C++ functions. Vice versa, you need to convert C++ objects returned from your C++ function into Python objects.__
 
 That's it.
 
@@ -84,5 +84,55 @@ The task is more time-consuming than it is difficult. And it varies by how many 
 expose and how many objects you need to convert. There are many tools out there to help you.
 They help by reducing the amount of conversion code you need to write. In exchange, you make
 it more difficult for other users to install your package because they'll need to obtain the same tools.
+
+For example, consider this C++ method. It's the entry point to a much large library
+with complex functionality. `CustomClass`, `A`, and `B` are all C++ classes.
+
+```
+// megaFoo.h
+
+#include "scary.h"
+#include "complex.h"
+
+CustomClass megaFoo(vector<A>& vectA, B b);
+```
+
+Your C++ binding will work like this.
+
+```
+// megaFooAdapter.h
+
+#include "path/to/megaFoo.h"
+#include "Python.h"
+
+class pyCustomClass(PyObject)
+{
+  ...
+};
+
+class pyA(PyObject)
+{
+  ...
+};
+
+class pyB(PyObject)
+{
+  ...
+};
+
+pyCustomClass pyMegaFoo(list listA, pyB b)
+{
+  vector<A> vA = convertListAToVectorA(listA);
+  B = convertpyBToB(b);
+
+  CustomClass cc = megaFoo(vA, B);
+  return covertCustomClassTopyCustomClass(cc);
+}
+```
+
+As you can see, megaFooAdapter does all the work. The function `pyMegaFoo()` accepts
+all Python arguments and converts them to classes that the original `megaFoo()`
+understands. But `megaFoo()` returns a C++ class. So we convert it back to a Python
+class that we'll use.
 
 Check out the next post for writing these functions.
