@@ -17,11 +17,7 @@ _This guide is born from my recent experiences of adding Python bindings to a la
 After stumbling around, I was finally able to make things work.
 I don't think it's difficult to write Python bindings or  C++ extensions;
 it's just hard to know how you should approach doing so for your particular case.
-And so that is what I want to discuss here._
-
-_Part of the reason why writing Python bindings for C++ is so confusing is because the examples
-people give are so shitty. They are stupid useless examples that don't motivate the
-need for Python bindings. Or they go into how they resolve a unique C++ feature, like templates, for Python._
+I hope to do that in a series of blog posts. This will be just an introduction._
 
 <a id="what"></a>
 
@@ -67,8 +63,10 @@ Mainly, you can leverage the ease and speed of developing in Python coupled with
 
 ### Where do I wrap/attach binding/extend?
 
-You usually have entry points into your C++ library. You wrap around or attach bindings
-to these entry points.
+You usually have a set of functions that serve as the interface into your C++ library. You wrap around or attach bindings to these functions.
+
+#### How will it be used?
+
 Suppose you had a C++ library called `myLib.a` or `myLib.so`.
 Now you can use it like this in Python: `import myLib`.
 Now your CPython is _extended_ with `myLib`.
@@ -84,68 +82,7 @@ That's it.
 
 The task is more time-consuming than it is difficult. And it varies by how many functions you want to
 expose and how many objects you need to convert. There are many tools out there to help you.
-They help by reducing the amount of conversion code you need to write. The exchange is
-how easily your package can be distributed.
+They help by reducing the amount of conversion code you need to write. In exchange, you make
+it more difficult for other users to install your package because they'll need to obtain the same tools.
 
-Example:
-I'm concentrating on Boost.Python because it's long-running and well-established way to get your C++ into Python.
-
-* Build Boost.Python (or obtain Boost.Python)
-* Write facade C++ functions using the boost_python library.
-
-__How to write these facade functions?__
-
-* Make them only accept Python objects as arguments via boost_python library
-* you should expose C++ classes whose objects are returned by methods
-* use boost_python again to help with any conversion between Python and C++ types i.e. (str to string or char arrays, list to vectors, etc.)
-
-Suppose you have this C++ library
-
-<a name="fakecpp"></a>
-
-```
-#include <fancy.h>
-#include <ohlala.h>
-
-X& foo(vector<Y> yVect, Z* yes);
-```
-
-### Packaging and Distribution Strategies
-
-The following are how you may have written your extensions...
-
-__Pure C__
-
-Your package can entirely be installed by distutils/setuptools.
-
-__Pure C++ (and done properly...)__
-
-Same as __Pure C__. Your package can entirely be installed by distutils/setuptools.
-
-__Impose user to compile C/C++ library and the package provides the extension__
-
-You assume that the user has built the native C/C++ library e.g. `myLib.a` or `myLib.so` and it is pointed to by `LD_LIBRARY_PATH`.
-
-__Include C/C++ source and package builds entire library and extension__
-
-You include the C/C++ code with the package and setup.py compiles the entire library and facade functions.
-
-### Improperly done C++ Extensions
-
-Function names are mangled by C++ to support C++ features such as overloading.
-Python won't know what to call. You need to use `extern C` ([more info](http://stackoverflow.com/a/1041880/4400558)).
-
-### The C++ Extensions for Python Tools Matrix
-
-SWIG
-Boost.Python
-
-<a id="CPython"></a>
-
-### What is CPython?
-
-Python is a language specification. And its most popular implementation is CPython as a scripted, dynamic, interpreted programming language. CPython is the Python interpreter written in C. CPython happens to also
-be the reference implementation of Python. (_Fun Fact: did you know [Ruby](https://en.wikipedia.org/wiki/Ruby_(programming_language)) had_ ***only*** _the interpreter
-as the language reference until 2011 when the language specification was finally created?_)
-
-[There are implementations of Python](http://docs.python-guide.org/en/latest/starting/which-python/#implementations)
+Check out the next post for writing these functions.
