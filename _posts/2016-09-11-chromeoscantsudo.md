@@ -14,9 +14,10 @@ Solution:
 
 1. Go into VT2 using `ctrl+alt+F2`.
 2. When prompted for a login, use `root`.
-3. If you enabled _Debugging Features_ and __you set a root password__, enter that password.
-   If you enabled _Debugging Features_ and __you DID NOT set a root password__, enter `test0000`.
-   If you DID NOT enable _Debugging Features_, ...([contributions welcomed](https://github.com/nhatbui/nhatbui.github.io/blob/master/_posts/2016-09-11-chromeoscantsudo.md))
+3. 
+    * If you enabled _Debugging Features_ and __you set a root password__, enter that password.
+    * If you enabled _Debugging Features_ and __you DID NOT set a root password__, enter `test0000`.
+    * If you DID NOT enable _Debugging Features_, ...? ([contributions welcomed](https://github.com/nhatbui/nhatbui.github.io/blob/master/_posts/2016-09-11-chromeoscantsudo.md))
 4. Enter `chromeos-setdevpasswd` and follow the prompt.
 5. Once complete, you have just set the `sudo` password! Use it on the shell (a.k.a `ctrl+alt+t` and `shell`).
 6. Done!
