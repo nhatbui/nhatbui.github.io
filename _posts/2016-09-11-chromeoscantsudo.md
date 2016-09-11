@@ -11,6 +11,7 @@ So you have a Chromebook. You booted into developer mode. You `alt+ctrl+t` for t
 But now when you want to try [crouton](https://github.com/dnschneid/crouton) or something as `sudo`, it prompts you for a password you don't know!
 
 Solution:
+
 1. Go into VT2 using `ctrl+alt+F2`.
 2. When prompted for a login, use `root`.
 3. If you enabled _Debugging Features_ and __you set a root password__, enter that password.
