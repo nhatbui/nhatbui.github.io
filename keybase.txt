@@ -1,0 +1,67 @@
+==================================================================
+https://keybase.io/nbui
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://nhatqbui.com
+  * I am nbui (https://keybase.io/nbui) on keybase.
+  * I have a public key with fingerprint F94F AD77 4CB9 40E4 10E0  EBA1 6453 F747 FEC6 7C28
+
+To do so, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "eldest_kid": "010172fe2d147178345c7524450cb2f7b7fbcf5e757d0a0248e9c35c448a4e7247d50a",
+            "fingerprint": "f94fad774cb940e410e0eba16453f747fec67c28",
+            "host": "keybase.io",
+            "key_id": "6453f747fec67c28",
+            "kid": "010172fe2d147178345c7524450cb2f7b7fbcf5e757d0a0248e9c35c448a4e7247d50a",
+            "uid": "a2eee88a8b685d3eff4a51d9b55fc219",
+            "username": "nbui"
+        },
+        "service": {
+            "hostname": "nhatqbui.com",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1473651885,
+    "expire_in": 157680000,
+    "prev": "d972e8c5dd47a976c681bca18e93d1ed394387e7fd2c7bc92fd55d61197a3d91",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: GnuPG v1
+
+owGtUltIFUEY3nPKLMvqIeqlwpYEI9Od3Zmd3QMVgVBEiWUhRXTYuayul93jOatW
+ZijZxe5khVARkb2lXSWjlyKKSEmR8KEHT6mI1UNIoKhRzUq+9di8DPP/3/fN9/38
+l9LnSOEQK5zY+uvN0axQ1xciFfWvfV4rE48dliO1chmfuXg54wk/WuYwOSIrQAFY
+tbnKAMQAGxpEFCMVQqRQotqYYJtQG3GMMFMsRYUGN6mGKISGBTlWIWZIseRs2Xbc
+Yh6PxR3XF7K2CW2LYQwpMaHCIVC4wokFdIg0G0Nsc6pjqhqCWOIlAoYwR6wEz3E8
+UROP6Iy9f+D/s++qGTlL5ZwbhmUQ3UBM47YNLQSYSRCyqQrMAJjgcdeq4ALtkipH
+rsuWRaXaoTwYapBitlti+ZUCkUO9CsGLxT3fo1656JT4fiwSEP3DsQBZw0n0r0aU
+OC4TIxSEah5POJ4rR4BAUt8JREVITUfAMFC2zA/FnDiPOgECYd1QxAm+4dVCkplY
+5QZFjEFcaJlYp7oBCLWAyK8xwJlmQs3AHNtMpZhQU7UZQkwHwMSWxkwgB7EqXU+O
+QOHTKhaaCafYtfyqOJfr0ppCK+dKobA0LyUcLJeUtmDp7MZNTqT+2qi3Dz9IWTjG
+in80vOsbdm7urP95y33a2DuV2Q3bVrSvqy+4J72fznirSaXut/36FtC7OO9W25n6
+3Z/XdKUOvB4cfzaaUrYpcmDBEa+iZvRFy/sPLU1m3m1v7Y2W9uT32taLyR2NbT2R
+HlX9FNsjfSTnLmeWzs/oftj1Oj95B9/PHbgysuhs79eG9LvHGk4251/NO9U/tLzr
+0fqCa2lj7U9S7493al5fVSISGttRc+FGzVDzYOxBx4nzJblz92aEm5Y2ju7Jae2s
+2KesuViY+vLawSW7dq7e9iI/4/e3kanJzfM6Hu8NL8sq3DBNYsnTzXWqJr1aNVlU
+lMwbu/78+PbaZ6N/AA==
+=icu4
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/nbui
+
+==================================================================
