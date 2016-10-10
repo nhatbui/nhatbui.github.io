@@ -1,6 +1,8 @@
 ---
 layout: post
 title: Working in New Domains
+description: What to do in a new data science domain?
+author: Nhat Bui
 tags: programming, career, data science, machine learning
 category: programming
 ---

@@ -12,7 +12,19 @@ description: Nhat Bui, Software Engineer
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://nhatqbui.com" # the base hostname & protocol for your site
 twitter_username: gnatbuoy
+twitter:
+  username: gnatbuoy
 github_username:  nhatbui
+author: Nhat Bui
+logo: /assets/n_hat.png
+social:
+  name: Nhat Bui
 
 # Build settings
 markdown: kramdown
+
+gems:
+  - jekyll-sitemap
+  - jekyll-seo-tag
+  - jemoji
+  - jekyll-mentions
