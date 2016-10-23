@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Bandits for Trauma Response: A Practical Walkthrough
+title: A Practical Walkthrough about Bandits for Trauma Response
 description: Exploring, with code, a use case for bandit algorithms relating to the PIPT
 author: Nhat Bui
 tags: programming, data science, machine learning
