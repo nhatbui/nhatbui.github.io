@@ -19,7 +19,7 @@
           <div class="col-md-2"></div>
           <div class="col-md-8 center">
             <img src="/assets/demo.gif"/>
-            <figcaption class="caption">(that "an message" typo was on purpose, I swear!)*</figcaption>
+            <figcaption class="caption">(that "an message" typo was on purpose, I swear!)<a href="#how">*</a></figcaption>
             <br/>
             <a class="btn btn-default" href="#" id="install-button">
               <img src="/assets/ChromeWebStore_Badge.png" alt="Chrome Web Store"/>
@@ -43,8 +43,11 @@
         <p>No. We constrain the extension to only work on Twitch. There's no code that monitors and
           tracks your usage. Please feel free to explore the <a href="https://github.com/nhatbui/compakt">source code</a> yourself!</p>
 
-        <h3>How does it work?</h3>
+        <h3><span id="how">How does it work?</span></h3>
         <p><i>compakt</i> uses <a href="https://en.wikipedia.org/wiki/Suffix_array">suffix arrays</a> to compress messages and <a href="https://en.wikipedia.org/wiki/MinHash">minhashing</a> to condense similar messages.</p>
+        <p>In the example GIF above, noticed the 2 similar messages "This is a message." and "This is an message.". <i>compakt</i> notices
+          that the messages are <a href="https://en.wikipedia.org/wiki/MinHash#Jaccard_similarity_and_minimum_hash_values">similar enough</a>
+          and thus condensed them together.</p>
 
       </div>
     </div>
