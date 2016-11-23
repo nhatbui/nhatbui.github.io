@@ -7,6 +7,8 @@ tags: programming, Chrome, Twitch, chat, extensions, add-ons, plugins, Javascrip
 category: programming
 ---
 
+![How to make your own Chrome Extensions for Twitch!]({{ site.baseurl }}/assets/howto_twitch_chrome.png)
+
 ## Customize and extend Twitch Chat!
 
 People have [strong opinions](http://www.urbandictionary.com/define.php?term=twitch%20chat) about Twitch Chat.
