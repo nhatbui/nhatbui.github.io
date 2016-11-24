@@ -29,6 +29,7 @@ with a picture of a bard: ![bard!]({{ site.baseurl }}/assets/bard.png).
 * some Javascript knowledge
 
 # Chrome Extension Basics
+
 ## (just the bare minimal!)
 
 A Chrome extension is just that: it extends the functionality of the Chrome browser.
@@ -107,6 +108,7 @@ The most important parts of this file are:
 * __run_at__: When the injection of JavaScript is done
 
 # Meat and Bones
+
 ## Diving into the code!
 
 In the manifest file, devs can determine when the extension is loaded. This affects what
@@ -195,7 +197,7 @@ var bardFinder = new MutationObserver(function (mutations) {
     mutation.addedNodes.forEach(function (addedNode) {
       // At this point it's potentially a chatMessage object.
       var chatMessage = $(addedNode);
-      if (!chatMessage.is(twitchChatMessageClass1, twitchChatMessageClass2)) {
+      if (!chatMessage.is(".chat-line", ".message-line")) {
         // this isn't a chat message, skip processing.
         return;
       }
@@ -240,6 +242,7 @@ Finally, before going into the nitty gritty, we start the observer to listen for
 `chatLoadedObserver.observe(htmlBody, config);`
 
 # Parsing the Chat message
+
 ## Here is where we do our bard magic!
 
 Looking at the parsing code will be straight-forward if you're familiar with JavaScript. This part
