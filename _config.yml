@@ -19,6 +19,8 @@ author: Nhat Bui
 logo: /assets/n_hat.png
 social:
   name: Nhat Bui
+paginate: 5
+paginate-page: "page:num"
 
 # Build settings
 markdown: kramdown
@@ -28,3 +30,4 @@ gems:
   - jekyll-seo-tag
   - jemoji
   - jekyll-mentions
+  - jekyll-paginate
