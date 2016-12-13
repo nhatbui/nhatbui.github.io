@@ -123,7 +123,7 @@ consecutive suffixes.
 <p>
 What I want to do first is establish an intuition for determining the longest
 repeated substring from a suffix array. Suppose we simply wanted to find an occurrence
-of a pattern in the string __abracadabra__. Let this pattern be __bra__. What we
+of a pattern in the string <b>abracadabra</b>. Let this pattern be <b>bra</b>. What we
 would do is a binary search on the suffix array. If the pattern exists in the string
 it is equal to a suffix or a substring of a suffix, also known as a prefix.
 Knowing this, how do we find an arbitrary substring that repeats in the string?
