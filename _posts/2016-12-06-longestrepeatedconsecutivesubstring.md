@@ -7,8 +7,6 @@ tags: programming, functional programming, Lisp, algorithm, suffix array
 category: programming
 ---
 
-# Introduction
-
 I wanted to document my journey figuring out how I solved a unique problem and
 how doing so in Lisp helped me find a concise and correct solution.
 
@@ -25,8 +23,6 @@ Extension for Twitch chat.
 To compress long messages, I used suffix arrays and an adaptation to
 the classic longest repeated substring. Prototyping all this in Lisp really help me
 decide on a concise and accurate solution.
-
-# Background: Suffix Arrays
 
 Suppose we had the following string: __abracadabra__. Suffixes are substrings
 that contain all characters from a position in the string to the end of the string.
@@ -111,8 +107,6 @@ I went with a suffix array because it was easier so me to understand.</p>
 
 </div>
 
-# History: the Longest Repeated Substring.
-
 The [longest repeated substring](https://en.wikipedia.org/wiki/Longest_repeated_substring_problem)
 is a well-document problem. What follows is a description of the problem and how it's
 solved with [suffix arrays](https://en.wikipedia.org/wiki/Suffix_array). Then I'll describe the steps I take to adapt it to my problem: the longest repeated ___consecutive___ substring.
@@ -140,35 +134,47 @@ of consecutive suffixes.
 Finding the _longest_ repeated substring is a simple matter of retaining a best-so-far
 match and comparing the length of new potential matches.
 
-## Algorithm
-
     (defun lcp (a b)
       (let ((i (string< a b)))
-        (subseq a 0 i)
+        (subseq a 0 i))
     )
 
     (defun returnLonger (a b)
-      (if (>= (length a) (length b))
+      (if (> (length a) (length b))
         a
         b
       )
     )
 
-    (defun findLongestCommonSubstring (suffixarr best)
-      (let ((lcs (returnLonger
-                   (lcp (first suffixArray) (second suffixArray))
-                   best)))
+    (defun findLongestCommonSubstring (suffixarr str best)
+      (let ((best (returnLonger
+                    (lcp (subseq str (first suffixarr)) (subseq str (second suffixarr)))
+                    best)))
         (if (<= (list-length suffixarr) 2)
           best
-          (findLongestCommonSubstring (rest suffixArr) best))
+          (findLongestCommonSubstring (rest suffixarr) str best)))
     )
+
+    (defun _range (count i l)
+        (if (<= count 0)
+            l
+            (_range (1- count) (1+ i) (append l (list i))))
+    )
+
+    (defun range (count)
+        (_range count 0 ())
+    )
+
+    (let ((s (read-line)))
+      (let ((suffixarray (sort (range (length s)) #'(lambda (x y) (string< x y)) :key #'(lambda (i) (subseq s i)))))
+        (let ((lrcs (findLongestCommonSubstring suffixarray s "")))
+          (print lrcs))))
+
 
 <p>
 We benefit from iterating through the suffix array in \(O(n)\). But since we
 compare each character of the string, the algorithm is \(O(n^{2})\).
 </p>
-
-# Longest Repeated Consecutive Substring
 
 We have a strong foundation for what we want to do. However, it's not perfect.
 Take this for example:
@@ -179,15 +185,15 @@ The longest repeated substring is __ATCGA__. This repeated substring overlaps
 with itself. We would like to find a repeated substring that doesn't overlap and
 is consecutive.
 
-### __Non-overlapping but also not consecutive__
+__Non-overlapping but also not consecutive__:
 
-__ABBAissocoolIloveyouABBA\$__
+    ABBAissocoolIloveyouABBA\$
 
 Repeated string __ABBA__ occurs but not sequentially.
 
-### __Non-overlapping and consecutive__
+__Non-overlapping and consecutive__:
 
-__yoloyoloyolobaggins__
+    yoloyoloyolobaggins\$
 
 Repeated string __yolo__ is repeated multiple times and is non-overlapping and
 consecutive.
@@ -199,15 +205,13 @@ be the same distance as the distance between 2 suffixes. So for every longest
 common prefix that we find, check if its length is equal to the distance between
 the 2 suffixes. If so, it is repeated, non-overlapping and consecutive.
 
-## Algorithm
-
     (defun lcp (a b)
       (let ((i (string< a b)))
-        (subseq a 0 i)
+        (subseq a 0 i))
     )
 
     (defun updatelcp (oldlcp checklcp suffix1 suffix2)
-      (if (and (>= (length checklcp) (length oldcp))
+      (if (and (> (length checklcp) (length oldlcp))
                (checkConsecutive checklcp suffix1 suffix2))
         checklcp
         oldlcp
@@ -219,17 +223,31 @@ the 2 suffixes. If so, it is repeated, non-overlapping and consecutive.
     )
 
     (defun findLongestCommonSubstring (suffixarr str best)
-      (let ((suffixIdx1 (first suffixArr))
-            (suffixIdx2 (second suffixArr)))
-        (let ((lcs (updatelcp
-                     (lcp (subseq str suffixIdx1) (subseq str suffixIdx2))
-                     best suffixIdx1 suffixIdx2)))
-          (if (<= (list-length suffixarr) 2)
-            best
-            (findLongestCommonSubstring (rest suffixArr) best))))
+      (let ((best (updatelcp
+                    best
+                    (lcp (subseq str (first suffixarr)) (subseq str (second suffixarr)))
+                    (first suffixarr)
+                    (second suffixarr))))
+        (if (<= (list-length suffixarr) 2)
+          best
+          (findLongestCommonSubstring (rest suffixarr) str best)))
     )
 
-# Extensions
+    (defun _range (count i l)
+        (if (<= count 0)
+            l
+            (_range (1- count) (1+ i) (append l (list i))))
+    )
+
+    (defun range (count)
+        (_range count 0 ())
+    )
+
+    (let ((s (read-line)))
+      (let ((suffixarray (sort (range (length s)) #'(lambda (x y) (string< x y)) :key #'(lambda (i) (subseq s i)))))
+        (let ((lrcs (findLongestCommonSubstring suffixarray s "")))
+          (print lrcs))))
+
 
 Before I explain how Lisp helped me understand this logic, I want to quickly
 describe one other extension I made for my application.
@@ -239,7 +257,7 @@ original message. So I tokenized the original string and treated each token as a
 character. Then I performed the longest repeated consecutive substring on this
 new structure. You can give the code here on my [GitHub](https://github.com/nhatbui/lrs_lisp).
 
-# I love Lisp
+> I love Lisp
 
 In my head, I imagined this section as a list of features that I would ramble on
 about how they helped me implementation this algorithm. But I think I only need
