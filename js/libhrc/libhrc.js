@@ -32,14 +32,23 @@ var findTokenPositions = function(str) {
   return tokenIndices;
 }
 
-var getLongestRepeatedSubString = function(str) {
+var getLCPArray = function(str) {
   // Iterates through a suffix array and finds the longest common prefix.
+
+  if (str.length === 0) {
+    return [];
+  }
+
+  // Split the sentence into tokens.
   var tokenList = str.split(" ");
   if (tokenList.length <= 1) {
     return "";
   }
+
+  // Get positions of each token in the original string.
   var positions = findTokenPositions(str);
 
+  // Create the shuffix array by sorting it.
   var shuffixArray = Array.apply(null, Array(tokenList.length))
     .map(function (_, i) {return i;});
   shuffixArray.sort(function(a, b) {
@@ -53,70 +62,135 @@ var getLongestRepeatedSubString = function(str) {
       return 0;
     }
   });
-  //console.log(shuffixArray);
 
-  var best = "";  // will hold longest, repeated, non-overlapping substring.
-
+  // Build LCP array (longest common prefix)
+  var lcp_array = [];
   for(var i = 1; i < shuffixArray.length; i++) {
     var sh1 = shuffixArray[i-1];
     var sh2 = shuffixArray[i];
 
-    var distance = Math.abs(positions[sh1] - positions[sh2]);
-
     var tokensMatched = longestCommonPrefix(sh1, sh2, tokenList);
-    var matchLength = tokenList.slice(sh1, sh1+tokensMatched).reduce(function(a, b) {
-      return a + 1 + b.length;
-    }, -1);
+    var lcp = tokenList.slice(sh1, sh1+tokensMatched).join(" ");
 
-    // check if match is consecutive between these 2 shuffixes.
-    if((matchLength > best.length) && (matchLength+1 === distance)) {
-      best = tokenList.slice(sh1, sh1+tokensMatched).join(" ");
+    if (lcp.length > 0) {
+      lcp_array.push(lcp);
     }
   }
 
-  return best;
+  lcp_array.sort(function(a, b) {
+    if (a.length < b.length) {
+      return -1;
+    } else if (a.length > b.length) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  return lcp_array;
 };
 
-var tagRepeats = function(pattern, doc, tag=true, multiplier=' x', tagStart='<', tagEnd='> ') {
-  // Using Rabin Karp, find the pattern in the document and tag each
-  // repeated instance of the pattern.
-  var hash = {};
-  hash[pattern] = true; // TODO: needs to be a rolling hash!
-  var count = 0;
-  var newDoc = "";
-  var foundInstance = false;
-  var idx = 0;
-  for (;idx <= doc.length - pattern.length;) {
-    var checkSubstring = doc.slice(idx, idx + pattern.length);
-    var match = checkSubstring in hash;
-    if(match) {
-      // if this is the 2nd or more occurrence...
-      // ...don't add to new str.
-      count += 1;
-      foundInstance = true;
-      idx += pattern.length + 1;
-    } else {
-      if(count > 1 && foundInstance && tag) {
-        // The end of a repeated match.
-        newDoc += tagStart + pattern + multiplier + count + tagEnd;
-      } else if(foundInstance) {
-        // One match
-        newDoc += pattern;
+var findAllIndices = function(arr, elem) {
+  var indices = [];
+  var i = arr.indexOf(elem);
+  while(i != -1) {
+    indices.push(i);
+    i = arr.indexOf(elem, i+1);
+  }
+  return indices;
+}
+
+var findRuns = function(pattern, doc) {
+  var matches = findAllIndices(doc, pattern);
+
+  // Returned structure:
+  // list of tuples where each tuple is the start of the run and the number
+  // of times that run is repeated.
+  if (matches.length === 0) {
+    return doc;
+  } else if (matches.length === 1) {
+    return [{start: matches[0], count: 1}];
+  } else {
+    // collect "runs"
+    var runs = [];
+    var runStart = matches[0];
+    var runCount = 1;
+    for(var i = 1; i < matches.length; i++) {
+      var diff = matches[i] - matches[i-1];
+      if (diff === (pattern.length + 1)) {
+        // Continue the run
+        runCount++;
+      } else {
+        // Log the run.
+        runs.push({start: runStart, count: runCount});
+
+        // Restart run counting
+        runStart = matches[i];
+        runCount = 1;
       }
-      newDoc += doc[idx];
-      count = 0;
-      foundInstance = false;
-      idx++;
     }
+    // State:
+    // - The last run is never logged.
+    //    - If there's one run, it still hasn't been logged.
+    // - for n number of runs where n > 1, the last is not printed so we better
+    //   make sure we handle it outside of this for loop.
+    runs.push({start: runStart, count: runCount});
   }
 
-  if(count > 1 && foundInstance && tag) {
-    // The end of a repeated match.
-    newDoc += tagStart + pattern + multiplier + count + tagEnd;
-  } else if(foundInstance) {
-    // One match
-    newDoc += pattern;
+  return runs;
+};
+
+var tagRuns = function(runs, pattern, doc, showNum, multiplier, tagStart, tagEnd) {
+  var lastPos = 0;
+  var newDoc = '';
+  for (run of runs) {
+    newDoc += doc.slice(lastPos, run.start);
+
+    if (showNum && run.count > 1) {
+      newDoc += tagStart + pattern + multiplier + run.count + tagEnd + " ";
+    } else {
+      newDoc += pattern + " ";
+    }
+
+    lastPos = run.start + run.count*(pattern.length + 1);
+  }
+
+  if (lastPos < doc.length) {
+    newDoc += doc.slice(lastPos);
   }
 
   return newDoc.trim();
-};
+}
+
+var tagRepeats = function(pattern, doc, showNum, multiplier, tagStart, tagEnd) {
+  var runs = findRuns(pattern, doc);
+  return tagRuns(runs, pattern, doc, showNum, multiplier, tagStart, tagEnd);
+}
+
+var naive_compress = function(s, showNum=false, multiplier="", left_tag="", right_tag="") {
+  var lcp_array = getLCPArray(s);
+  //console.log(lcp_array);
+  if (lcp_array.length > 0) {
+    // Starting from the longest LCP, find the first LCP that compresses the
+    // original string.
+    var i = lcp_array.length - 1;
+    var lrs = null;
+    while(i >= 0) {
+      var testlrs = lcp_array[i];
+      var testCompress = tagRepeats(testlrs, s);
+      if (testCompress.length < s.length) {
+        lrs = testlrs;
+        break;
+      }
+      i--;
+    }
+
+    if (lrs) {
+      return tagRepeats(lrs, s, showNum, multiplier, left_tag, right_tag);
+    } else {
+      return s;
+    }
+  } else {
+    return s;
+  }
+}
