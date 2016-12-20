@@ -23,14 +23,14 @@ I'll show you how to retrieve chat messages so that you'll be able to do cool st
 We'll make an extension that finds any utterance of the word "bard" and replaces it
 with a picture of a bard: ![bard!]({{ site.baseurl }}/assets/bard.png).
 
-# Requirements
+## Requirements
 
 * Chrome Browser (I hope to have more posts on Firefox, Safari, etc.)
 * some Javascript knowledge
 
-# Chrome Extension Basics
+## Chrome Extension Basics
 
-## (just the bare minimal!)
+### (just the bare minimal!)
 
 A Chrome extension is just that: it extends the functionality of the Chrome browser.
 An extension usually consists of the following files:
@@ -50,7 +50,7 @@ webpage's resources.
 
 Let's make the __manifest__ file first.
 
-# Manifest Destiny
+## Manifest Destiny
 
 I'm just going to dump the manifest file on you and then explain the important parts.
 Check out the Chrome Extension [manifest resource](https://developer.chrome.com/extensions/manifest)
@@ -107,9 +107,9 @@ The most important parts of this file are:
 * __web_accessible_resources__: Resources in the extension that the browser may have access to and load. We specify our bard picture right there.
 * __run_at__: When the injection of JavaScript is done
 
-# Meat and Bones
+## Meat and Bones
 
-## Diving into the code!
+### Diving into the code!
 
 In the manifest file, devs can determine when the extension is loaded. This affects what
 the extension can act on in the DOM. For Twitch, it's a little tricky. Notice that for __run_at__,
@@ -241,9 +241,9 @@ Finally, before going into the nitty gritty, we start the observer to listen for
 
 `chatLoadedObserver.observe(htmlBody, config);`
 
-# Parsing the Chat message
+## Parsing the Chat message
 
-## Here is where we do our bard magic!
+### Here is where we do our bard magic!
 
 Looking at the parsing code will be straight-forward if you're familiar with JavaScript. This part
 has the least to do with Twitch or Chrome extensions.
@@ -276,7 +276,7 @@ chrome.extension.getURL('assets/bard.png')
 We must use `chrome.extesion.getURL` when we are referencing a file in our extension package
 because the [API will create the appropriate path for us](https://developer.chrome.com/extensions/extension#method-getURL).
 
-# Load the extension
+## Load the extension
 
 I won't go over how to load the extension in Chrome because Google will do a
 better job than me.
@@ -285,11 +285,11 @@ better job than me.
 
 This is obviously for development sake. You can of course [upload it to the Chrome Web store](https://developer.chrome.com/extensions/hosting).
 
-# That's it!
+## That's it!
 
 ![bard demo!]({{ site.baseurl }}/assets/bard.gif)
 
-# Further Work
+## Further Work
 
 I hope you found that useful. I wanted to share some of the tricky bits such as
 identifying the appropriate elements of chat and how to get to them.
