@@ -3,7 +3,29 @@
 
 <!DOCTYPE html>
 <html>
-  {% include head.html %}
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=”shortcut icon” href=”favicon.ico” type=”image/png”>
+    <link rel=”icon” href=”favicon.ico” type=”image/png”>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/gfjfndigkjbiabgckjpngijjdkmebeje">
+    <link rel="stylesheet" href="{{ "/css/normalize.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+    <script src="{{ "/js/vendor/modernizr-2.8.3.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/vendor/jquery-1.11.2.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+    {% seo %}
+  </head>
   <body>
 
     <div class="header center-block">
@@ -49,6 +71,20 @@
           that the messages are <a href="https://en.wikipedia.org/wiki/MinHash#Jaccard_similarity_and_minimum_hash_values">similar enough</a>
           and thus condensed them together.</p>
 
+        <h3>Is this "sentence-compression"?</h3>
+        <p>Technically it is because we're reducing the length of a sentence
+          while maintaining its meaning. However, the algorithms do not look
+          at any semantics of the original message. We just happen to retain
+          the meaning because it's being uttered more than once. This also
+          assumes all messages on Twitch chat are well-formed sentences.</p>
+
+        <h3>Is this "data-compression"?</h3>
+        <p>Yes but at a much more simplistic level. Advanced techniques of compression
+          prioritize data-size (of course) which is extremely beneficial for
+          storage and transit but not for human-consumption.</p>
+
+        <h3><i>Guys can you please not spam the chat. My mom bought me this new laptop and it gets really hot when the chat is being spamed. Now my leg is starting to hurt because it is getting so hot. Please, if you don't want me to get burned, then dont spam the chat.</i></h3>
+        <p>If anything, this will make your laptop get hotter.</p>
       </div>
     </div>
 
