@@ -70,20 +70,28 @@
           that the messages are <a href="https://en.wikipedia.org/wiki/MinHash#Jaccard_similarity_and_minimum_hash_values">similar enough</a>
           and thus condensed them together.</p>
 
-        <h3>Is this "sentence-compression"?</h3>
-        <p>Technically it is because we're reducing the length of a sentence
+        <h3>Is this "<a href="https://www.google.com/search?q=nlp+sentence+compression">sentence-compression</a>"?</h3>
+        <p>We are certainly <i>compressing messages</i> because we're reducing the length of a sentence
           while maintaining its meaning. However, the algorithms do not look
-          at any semantics of the original message. We just happen to retain
-          the meaning because it's being uttered more than once. This also
-          assumes all messages on Twitch chat are well-formed sentences.</p>
+          at any semantics of the original message. When we reduce repeats to just
+          one utterance, we just happen to retain
+          the meaning because it's being uttered more than once.</p>
 
         <h3>Is this "data-compression"?</h3>
         <p>Yes but at a much more simplistic level. Advanced techniques of compression
           prioritize data-size (of course) which is extremely beneficial for
-          storage and transit but not for human-consumption.</p>
+          storage and transfer but not for human-consumption. So from a data-compression
+          perspective, we aim for an encoding scheme that is easily and quickly
+          decoded by a human.</p>
 
-        <h3><i>Guys can you please not spam the chat. My mom bought me this new laptop and it gets really hot when the chat is being spamed. Now my leg is starting to hurt because it is getting so hot. Please, if you don't want me to get burned, then dont spam the chat.</i></h3>
-        <p>If anything, this will make your laptop get hotter.</p>
+        <h3>
+          <i>
+            <a href="http://myfavoritetwitch.blogspot.com/2014/03/mommys-new-laptop-burns-me.html">
+              Guys can you please not spam the chat. My mom bought me this new laptop and it gets really hot when the chat is being spamed. Now my leg is starting to hurt because it is getting so hot. Please, if you don't want me to get burned, then dont spam the chat.
+            </a>
+          </i>
+        </h3>
+        <p>This will certainly make your laptop get hotter.</p>
       </div>
     </div>
 
