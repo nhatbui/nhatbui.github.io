@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="{{ "/css/normalize.min.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/compaktstyles.css" | prepend: site.baseurl }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
     <script src="{{ "/js/vendor/modernizr-2.8.3.min.js" | prepend: site.baseurl }}"></script>
@@ -49,6 +50,22 @@
           <div class="col-md-2"></div>
         </div>
 
+        <br/>
+
+        <div class="jumbotron row">
+          <div class="header center-block">
+            <h2>Try it out!</h2>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-8 center">
+            <input class="form-control" id="demoInput" type="text" placeholder="Try out the compakting algorithm! Type here!">
+            <br/>
+            <p id="output"></p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <figcaption class="caption"><a href="#issue">Something doesn't look right?</a></figcaption>
+
         <!-- FAQ section -->
         <div class="page-header">
           <h2>FAQ</h2>
@@ -63,6 +80,9 @@
         <h3>Do you send usage reports or track where I go online?</h3>
         <p>No. We constrain the extension to only work on Twitch. There's no code that monitors and
           tracks your usage. Please feel free to explore the <a href="https://github.com/nhatbui/compakt">source code</a> yourself!</p>
+
+        <h3><span id="issue">I see a bug/issue. How can I report it to you?</span></h3>
+        <p>You can <a href="https://github.com/nhatbui/libhrc/issues">submit an issue on GitHub</a> or email me! <i>nhat at nhatqbui dot com</i></p>
 
         <h3><span id="how">How does it work?</span></h3>
         <p><i>compakt</i> uses <a href="https://en.wikipedia.org/wiki/Suffix_array">suffix arrays</a> to compress messages and <a href="https://en.wikipedia.org/wiki/MinHash">minhashing</a> to condense similar messages.</p>
@@ -100,6 +120,17 @@
     </div>
     {% include footer.html %}
 
+    <script src="{{ "/js/libhrc/libhrc.bundle.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript">
+    var libhrc = require('libhrc');
+    $("#demoInput").keyup(function() {
+      $("#output").html(
+        libhrc.greedy_compress(
+          $("#demoInput").val(), ' ', true, " x", "<span class='repeated-word'>", "</span>"
+        )
+      );
+    });
+    </script>
     <script>
     $("#install-button").click(function() {
       chrome.webstore.install();
