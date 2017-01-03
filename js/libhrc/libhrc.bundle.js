@@ -1,5 +1,17 @@
 require=(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 /**
+ * For str, escape all what are otherwise special regex chars.
+ * Ref: http://stackoverflow.com/a/6969486
+ * @param {string} str - String whose characters are escaped if they are also
+ * regex special/reserved characters.
+ * @return {string} resulting string with escaped characters if they are regex
+ * special/reserved characters.
+ */
+var escapeRegExp = function(str) {
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+};
+
+/**
  * Find indices of all occurance of elem in arr. Uses 'indexOf'.
  * @param {array} arr - Array-like element (works with strings too!).
  * @param {array_element} elem - Element to search for in arr.
@@ -41,11 +53,12 @@ var findAllIndicesRegex = function(str, re) {
  */
 var nullOutChars = function(str, start, end, nullChar) {
   return str.slice(0, start) + nullChar.repeat(end - start) + str.slice(end);
-}
+};
 
 module.exports.findAllIndices = findAllIndices;
 module.exports.findAllIndicesRegex = findAllIndicesRegex;
 module.exports.nullOutChars = nullOutChars;
+module.exports.escapeRegExp = escapeRegExp;
 
 },{}],2:[function(require,module,exports){
 var common = require('../lib/common.js');
@@ -141,6 +154,7 @@ module.exports = LCPArray;
 },{"../lib/common.js":1}],3:[function(require,module,exports){
 var common = require('../lib/common.js');
 
+
 /**
  * Find all "runs" of 'pattern' in 'doc'. Runs are sequential repeats.
  * A run is an object with the following keys:
@@ -154,7 +168,9 @@ var common = require('../lib/common.js');
 var findRuns = function(pattern, doc, delimiter) {
   // all matches must be followed by a whitespace or end of the string.
   // NOTE: We tokenized on single-space. Will the mismatch lead to funkiness?
-  var regexPattern = new RegExp(pattern + '(' + delimiter + '|$)', 'g');
+
+  var cleanPattern = common.escapeRegExp(pattern);
+  var regexPattern = new RegExp(cleanPattern + '(' + delimiter + '|$)', 'g');
   var matches = common.findAllIndicesRegex(doc, regexPattern);
 
   // Returned structure:
@@ -199,7 +215,6 @@ var findRuns = function(pattern, doc, delimiter) {
  * Replace sequential repeats, runs, by one instance of the pattern.
  * Optionally, add styling to all reduced runs.
  * @param {array} runs - Array of runs.
- * @param {string} pattern - String whose repeated pattern occurs in doc.
  * @param {string} doc - String containing runs of pattern.
  * @param {string} delimiter - String separating tokens.
  * @param {boolean} showNum - Flag to show number of repeats.
@@ -281,7 +296,7 @@ var naive_compress = function(s,
                               left_tag,
                               right_tag) {
   var lcp_array = LCPArray(s, delimiter);
-  lcp_array = lcp_array.filter(function (x) { return x.length > 0; });
+  lcp_array = lcp_array.filter(function(x) { return x.length > 0; });
 
   if (lcp_array.length > 0) {
     // Starting from the longest LCP, find the first LCP that compresses the
@@ -343,7 +358,7 @@ var greedy_compress = function(s,
                                left_tag,
                                right_tag) {
   var lcp_array = LCPArray(s, delimiter);
-  lcp_array = lcp_array.filter(function (x) { return x.length > 0; });
+  lcp_array = lcp_array.filter(function(x) { return x.length > 0; });
 
   if (lcp_array.length > 0) {
     // Estimate the savings of each LCP
@@ -389,7 +404,7 @@ var greedy_compress = function(s,
       // Deleting is important to find sebsequent runs of other LCS.
       for (x of newRuns) {
         testStr = common.nullOutChars(
-          testStr, x.start, x.start + x.pattern.length*x.count + (x.count - 1), ' '
+          testStr, x.start, x.start + x.pattern.length * x.count + (x.count - 1), ' '
         );
       }
 
