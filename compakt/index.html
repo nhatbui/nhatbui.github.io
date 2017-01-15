@@ -38,16 +38,15 @@
       <div class="wrapper container">
         <!-- abstract row -->
         <div class="row">
-          <div class="col-md-2"></div>
-          <div class="col-md-8 center">
-            <img src="/assets/demo.gif"/>
-            <figcaption class="caption">(that "an message" typo was on purpose, I swear!)<a href="#how">*</a></figcaption>
+          <div class="col-md-1"></div>
+          <div class="col-md-10 center">
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/RWK4uH3_Ddo" frameborder="0" allowfullscreen></iframe>
             <br/>
             <a class="btn btn-default" href="#" id="install-button">
               <img src="/assets/ChromeWebStore_Badge.png" alt="Chrome Web Store"/>
             </a>
           </div>
-          <div class="col-md-2"></div>
+          <div class="col-md-1"></div>
         </div>
 
         <br/>
@@ -85,10 +84,7 @@
         <p>You can <a href="https://github.com/nhatbui/libhrc/issues">submit an issue on GitHub</a> or email me! <i>nhat at nhatqbui dot com</i></p>
 
         <h3><span id="how">How does it work?</span></h3>
-        <p><i>compakt</i> uses <a href="https://en.wikipedia.org/wiki/Suffix_array">suffix arrays</a> to compress messages and <a href="https://en.wikipedia.org/wiki/MinHash">minhashing</a> to condense similar messages.</p>
-        <p>In the example GIF above, noticed the 2 similar messages "This is a message." and "This is an message.". <i>compakt</i> notices
-          that the messages are <a href="https://en.wikipedia.org/wiki/MinHash#Jaccard_similarity_and_minimum_hash_values">similar enough</a>
-          and thus condensed them together.</p>
+        <p><i>compakt</i> uses <a href="https://en.wikipedia.org/wiki/Suffix_array">suffix arrays</a> to compress messages.</p>
 
         <h3>Is this "<a href="https://www.google.com/search?q=nlp+sentence+compression">sentence-compression</a>"?</h3>
         <p>We are certainly <i>compressing messages</i> because we're reducing the length of a sentence
