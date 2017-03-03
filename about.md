@@ -20,5 +20,6 @@ Message him about CS, math, food (eating), Renaissance History, etc.
 * [nhat@nhatqbui.com](mailto:nhat@nhatqbui.com)
 * [github.com/nhatbui](https://github.com/nhatbui)
 * [facebook.com/nqbui](https://www.facebook.com/nqbui)
+* [GPG Public Key]({{ site.baseurl }}/assets/nbui.gpg.txt)
 
 ![me, South Africa]({{ site.baseurl }}/assets/me.jpg)
