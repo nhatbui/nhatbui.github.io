@@ -2,6 +2,7 @@
 layout: page
 title: Contact
 permalink: /contact/
+exclude_from_nav: true
 ---
 
 Message me about CS, math, food (eating), Renaissance History, etc.
