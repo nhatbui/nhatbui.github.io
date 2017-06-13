@@ -73,7 +73,7 @@ Follow these steps to quickly start up your Raspberry Pi.
 
     4. [More info](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
 
-## 6. Secure SSH:
+## 6. (not optional if you activated ssh!!!) Secure SSH:
 1. Edit file
 
     ```$ sudo vi /etc/ssh/sshd_config
