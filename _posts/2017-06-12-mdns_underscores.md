@@ -11,7 +11,7 @@ Are you setting up a host with multicast DNS (mDNS) but you can't seem to reach 
 
 Are there underscores in your hostname?
 
-avahi will discard underscores if they are present in the hostname.
+__`avahi` will discard underscores if they are present in the hostname.__
 
 my_host_name == myhostname
 
