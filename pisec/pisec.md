@@ -8,3 +8,5 @@ exclude_from_nav: true
 ![THE ULTIMATE RASPBERRY PI SECURITY GUIDE]({{ site.baseurl }}/assets/rpi_security.png)
 
 Change the default password.
+
+[PDF Version]({{ site.baseurl }}/assets/TheUltimateRaspberryPiSecurityGuide.pdf)
