@@ -1,0 +1,125 @@
+---
+---
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>{% if page.title %}{{ page.title | escape }}{% else %}{{ site.title | escape }}{% endif %}</title>
+    <meta name="description" content="{% if page.excerpt %}{{ page.excerpt | strip_html | strip_newlines | truncate: 160 }}{% else %}{{ site.description }}{% endif %}">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel=”shortcut icon” href=”favicon.ico” type=”image/png”>
+    <link rel=”icon” href=”favicon.ico” type=”image/png”>
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="stylesheet" href="{{ "/css/normalize.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/bootstrap.min.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/compaktstyles.css" | prepend: site.baseurl }}">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
+    <script src="{{ "/js/vendor/modernizr-2.8.3.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/vendor/jquery-1.11.2.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
+    {% seo %}
+  </head>
+  <body>
+
+    <div class="page-content">
+      <div class="header center-block container">
+        <h1>Run-Length Encoding for arbitrary-length substrings</h1>
+      </div>
+      <div class="wrapper container">
+        <br/>
+
+        <div id="demo" class="jumbotron row">
+          <div class="header center-block">
+            <h2>Try it out!</h2>
+          </div>
+          <div class="col-md-2"></div>
+          <div class="col-md-8 center">
+            <input class="form-control" id="demoInput" type="text" placeholder="Try 'yolo yolo yolo'!">
+            <br/>
+            <p id="output"></p>
+          </div>
+          <div class="col-md-2"></div>
+        </div>
+        <figcaption class="caption"><a href="#issue">Something doesn't look right?</a></figcaption>
+
+        <!-- FAQ section -->
+        <div class="page-header">
+          <h2>FAQ</h2>
+        </div>
+
+        <h3>What is this?</h3>
+        <p>Compressing messages while still making it readable to a human.</p>
+
+        <h3>{...not that special...}</h3>
+        <p>A more interesting example would be "yolo yolo yolo baggins yolo baggins yolo baggins". A naive
+          implementation may compress the starting yolo's and are forced to compress the rest like "&lt;yolo x3&gt; &lt;baggins yolo x2&gt; baggins".
+            However, it identifies that the compression "&lt;yolo x2&gt; &lt;yolo baggins x3&gt;" is more optimal.
+
+              But it's not perfect. Try "yolo yolo yolo baggins yolo baggins". Optimal would be "&lt;yolo x2&gt; &lt;yolo baggins x2&gt;" but that's not the case.
+        </p>
+
+        <h3>What's the application for this?</h3>
+        <p><a href="http://compakt.nhatqbui.com">compakt.nhatqbui.com</a></p>
+
+        <h3>Is it open-source?</h3>
+        <p>Absolutely! Check out the repository <a href="https://github.com/nhatbui/libhrc">here.</a></p>
+
+        <h3><span id="issue">I see a bug/issue. How can I report it to you?</span></h3>
+        <p>You can <a href="https://github.com/nhatbui/libhrc/issues">submit an issue on GitHub</a> or email me! <i>nhat at nhatqbui dot com</i></p>
+
+        <h3><span id="how">How does it work?</span></h3>
+        <p>It uses <a href="https://en.wikipedia.org/wiki/Suffix_array">suffix arrays</a> to create a set of whole-word substrings that are repeated more than once.
+         Then the algorithm poses the compression as a <a href="https://en.wikipedia.org/wiki/Set_packing">set-packing problem</a>
+         and optimizes for a minimum length of the compressed message. Length is defined as the sum of the size of the subset of patterns chosen.
+         The algorithm uses only a heuristic to find the minimum length. I have experimented with using a linear programming solver but 
+         from what I tried, I would have to enumerate all possible "compressions" given a pattern to feed into the solver. For example, given "yolo yolo yolo" and given that "yolo" is
+         identified as a repeated pattern by the suffix array, I would have to enumerate:
+          <ul>
+              <li>yolo yolo yolo yolo</li>
+              <li>&lt;yolo x2&gt; yolo yolo</li>
+              <li>&lt;yolo x3&gt; yolo</li>
+              <li>&lt;yolo x4&gt;</li>
+              <li>yolo &lt;yolo x2&gt; yolo</li>
+              <li>yolo &lt;yolo x3&gt;</li>
+              <li>yolo yolo &lt;yolo x2&gt;</li>
+          </ul> 
+        </p>
+
+        <h3>Is this "<a href="https://www.google.com/search?q=nlp+sentence+compression">sentence-compression</a>"?</h3>
+        <p>We are certainly <i>compressing messages</i> because we're reducing the length of a sentence
+          while maintaining its meaning. However, the algorithms do not look
+          at any semantics of the original message. When we reduce repeats to just
+          one utterance, we just happen to retain
+          the meaning because it's being uttered more than once.</p>
+
+        <h3>Is this "data-compression"?</h3>
+        <p>Yes but at a much more simplistic level. Advanced techniques of compression
+          prioritize data-size (of course) which is extremely beneficial for
+          storage and transfer but not for human-consumption. So from a data-compression
+          perspective, we aim for an encoding scheme that is easily and quickly
+          decoded by a human.</p>
+      </div>
+    </div>
+
+    {% include footer.html %}
+
+    <script src="{{ "/js/libhrc/libhrc.bundle.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript">
+    var libhrc = require('libhrc');
+    $("#demoInput").keyup(function() {
+      $("#output").html(
+        libhrc.greedy_compress(
+          $("#demoInput").val(), ' ', true, " x", "<span class='repeated-word'>", "</span>"
+        )
+      );
+    });
+    </script>
+  </body>
+</html>
