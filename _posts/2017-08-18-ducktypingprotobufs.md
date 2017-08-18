@@ -15,7 +15,7 @@ message Person {
 }
 ```
 
-__Don't use duck typing to see if an optional field has been set!__
+__Don't use [duck typing](https://en.wikipedia.org/wiki/Duck_typing#Example) to see if an optional field has been set!__
 
 Though the value is known to be unset, accessing the value always returns
 a default value! [(Source. See `optional` field description.)](https://developers.google.com/protocol-buffers/docs/pythontutorial#defining-your-protocol-format)
