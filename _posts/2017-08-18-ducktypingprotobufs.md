@@ -28,9 +28,12 @@ person = Person()
 if person.email:
     print('Oh wow you totally have an email!')
     print('It is: '.format(person.email))
+else:
+    print('I got nothing')
 ```
 
 `> Oh wow you totally have an email!`
+
 `> It is:`
 
 Use the compiled protobuf's data member functions to check existance:
