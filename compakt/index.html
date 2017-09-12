@@ -22,9 +22,6 @@
     <link rel="stylesheet" href="{{ "/css/compaktstyles.css" | prepend: site.baseurl }}">
     <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
     <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ "/feed.xml" | prepend: site.baseurl | prepend: site.url }}">
-    <script src="{{ "/js/vendor/modernizr-2.8.3.min.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "/js/vendor/jquery-1.11.2.min.js" | prepend: site.baseurl }}"></script>
-    <script src="{{ "/js/bootstrap.min.js" | prepend: site.baseurl }}"></script>
     {% seo %}
   </head>
   <body>
@@ -131,16 +128,14 @@
     <script src="{{ "/js/libhrc/libhrc.bundle.js" | prepend: site.baseurl }}"></script>
     <script type="text/javascript">
     var libhrc = require('libhrc');
-    $("#demoInput").keyup(function() {
-      $("#output").html(
-        libhrc.greedy_compress(
-          $("#demoInput").val(), ' ', true, " x", "<span class='repeated-word'>", "</span>"
-        )
+    document.getElementById("demoInput").addEventListener('keyup', function() {
+      document.getElementById("output").innerHTML = libhrc.greedy_compress(
+        document.getElementById("demoInput").value, ' ', true, " x", "<span class='repeated-word'>", "</span>"
       );
     });
     </script>
     <script>
-    $("#install-button").click(function() {
+    document.getElementById("install-button").addEventListener('click', function() {
       chrome.webstore.install();
     });
     </script>
