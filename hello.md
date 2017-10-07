@@ -1,0 +1,59 @@
+---
+---
+
+<html>
+  <head>
+    <title>Hello</title>
+    <style>
+      .center-div
+      {
+           position: absolute;
+           margin: auto;
+           top: 0;
+           right: 0;
+           bottom: 0;
+           left: 0;
+           height: 1em;
+      }
+
+      #ok
+      {
+        text-align: center;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="center-div">
+      <h1 id="ok">nhat bui</h1>
+    </div>
+ 
+    <script>
+      var o = document.getElementById("ok");
+      var s = o.innerHTML;
+      var i = 0;
+    
+      var anim = function(ele, str, idx) {
+        //console.log(str);
+        //console.log(idx);
+
+        str = str.slice(0, idx) + str[idx].toLowerCase() + str.slice(idx+1);
+    
+        idx += 1;
+        if(idx >= str.length) {
+            idx = 0;
+        }
+    
+        str = str.slice(0, idx) + str[idx].toUpperCase() + str.slice(idx+1);
+    
+        ele.innerHTML = str;
+    
+        setTimeout(function() {
+          anim(ele, str, idx);
+        }, 250);
+      }
+
+      anim(o, s, i);      
+    </script>
+  </body>
+</html>
